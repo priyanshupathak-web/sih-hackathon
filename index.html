@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriTech Solutions - Agricultural Calendar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="header__brand">
+                    <h1 class="brand-title">AgriTech Solutions</h1>
+                </div>
+
+                <nav class="header__nav">
+                    <ul class="nav-list">
+                        <li><a href="#" class="nav-link" data-section="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-section="problems">Problems</a></li>
+                        <li><a href="#" class="nav-link" data-section="weather">Weather</a></li>
+                        <li><a href="#" class="nav-link" data-section="crops">Crop Calendar</a></li>
+                        <li><a href="https://priyanshupathak-web.github.io/kisan-salahkar-pranali/"> Farmer Advisory</a></li>
+                    </ul>
+                </nav>
+
+                <button class="btn btn--farmer-login" data-section="login">Farmer Login</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Home Section -->
+        <section id="home" class="section section__home active">
+            <div class="container">
+                <div class="hero">
+                    <h1 class="hero__title">Transforming Agriculture Through Technology</h1>
+                    <p class="hero__subtitle">Addressing modern agricultural challenges with innovative solutions, weather intelligence, and crop planning tools</p>
+                </div>
+
+                <div class="overview-grid">
+                    <div class="card overview-card">
+                        <div class="card__body">
+                            <h3>🌾 Agricultural Challenges</h3>
+                            <p>Explore the major problems facing modern agriculture and discover innovative solutions that can transform farming practices.</p>
+                            <button class="btn btn--primary" data-section="problems">Explore Problems</button>
+                        </div>
+                    </div>
+
+                    <div class="card overview-card">
+                        <div class="card__body">
+                            <h3>🌤️ Weather Intelligence</h3>
+                            <p>Learn how weather forecasting plays a crucial role in agricultural planning, irrigation, and crop management.</p>
+                            <button class="btn btn--primary" data-section="weather">Weather Insights</button>
+                        </div>
+                    </div>
+
+                    <div class="card overview-card">
+                        <div class="card__body">
+                            <h3>📅 Crop Calendar</h3>
+                            <p>Access detailed month-by-month planting guides and seasonal crop information for optimal farming results.</p>
+                            <button class="btn btn--primary" data-section="crops">View Calendar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Editable Resources Section -->
+                <div class="resources-section">
+                    <h2>External Resources</h2>
+                    <div class="resources-grid" id="homeResources">
+                        <div class="resource-block">
+                            <h4>Government Resources</h4>
+                            <div class="resource-links">
+                                <a href="https://agriwelfare.gov.in" target="_blank" contenteditable="false" class="editable-link">Ministry of Agriculture</a>
+                                <a href="https://pmkisan.gov.in" target="_blank" contenteditable="false" class="editable-link">PM Kisan Portal</a>
+                                <a href="https://mkisan.gov.in" target="_blank" contenteditable="false" class="editable-link">mKisan Portal</a>
+                            </div>
+                        </div>
+
+                        <div class="resource-block">
+                            <h4>Research Institutes</h4>
+                            <div class="resource-links">
+                                <a href="https://icar.org.in" target="_blank" contenteditable="false" class="editable-link">ICAR</a>
+                                <a href="https://www.icrisat.org" target="_blank" contenteditable="false" class="editable-link">ICRISAT</a>
+                                <a href="https://www.irri.org" target="_blank" contenteditable="false" class="editable-link">IRRI</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problems Section -->
+        <section id="problems" class="section section__problems">
+            <div class="container">
+                <div class="section-header">
+                    <h1>Agricultural Problems & Solutions</h1>
+                    <p>Modern agriculture faces numerous challenges. Here are the major problems and technology-driven solutions.</p>
+                </div>
+
+                <div class="problems-grid" id="problemsGrid">
+                    
+                </div>
+                <div class="resources-section">
+                    <h2>Problem-Specific Resources</h2>
+                    <div class="resources-grid" id="problemsResources">
+                        <div class="resource-block">
+                            <h4>Climate Solutions</h4>
+                            <div class="resource-links">
+                                <a href="https://climatechange.gov.in" target="_blank" contenteditable="false" class="editable-link">Climate Change Portal</a>
+                                <a href="https://www.fao.org/climate-change/en" target="_blank" contenteditable="false" class="editable-link">FAO Climate Change</a>
+                            </div>
+                        </div>
+
+                        <div class="resource-block">
+                            <h4>Soil Health</h4>
+                            <div class="resource-links">
+                                <a href="https://soilhealth.dac.gov.in" target="_blank" contenteditable="false" class="editable-link">Soil Health Card</a>
+                                <a href="https://www.fao.org/soils-portal/en" target="_blank" contenteditable="false" class="editable-link">FAO Soils Portal</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather Section -->
+        <section id="weather" class="section section__weather">
+            <div class="container">
+                <div class="section-header">
+                    <h1>Weather Intelligence for Agriculture</h1>
+                    <p>Understanding weather patterns is crucial for successful farming. Here's how weather forecasting transforms agricultural practices.</p>
+                </div>
+
+                <div class="weather-importance" id="weatherImportance">
+                    <!-- Weather importance will be loaded dynamically -->
+                </div>
+
+                <div class="weather-current">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Current Weather Conditions</h3>
+
+                            <!-- Weather Controls -->
+                            <!-- Weather Data Display in Columns -->
+                            <div id="weatherData" class="weather-data-grid">
+
+                                <!-- Location Input -->
+                                <div class="weather-controls">
+                                    <div class="form-group">
+                                        <label for="locationInput" class="form-label">Enter Location</label>
+                                        <input type="text" id="locationInput" class="form-control" placeholder="Enter city name (e.g., Delhi, Mumbai)" value="London">
+                                        <button type="button" id="getWeatherBtn" class="btn btn--primary">Get Weather</button>
+                                    </div>
+                                </div>
+
+                                <!-- Weather Display Grid -->
+                                <div class="weather-display-grid" id="weatherDisplay">
+                                    <div class="weather-card temperature-card">
+                                        <div class="weather-icon">🌡️</div>
+                                        <h4>Temperature</h4>
+                                        <div class="weather-value" id="temperature">--°C</div>
+                                        <div class="weather-subtitle">Feels like <span id="feelsLike">--°C</span></div>
+                                    </div>
+
+                                    <div class="weather-card humidity-card">
+                                        <div class="weather-icon">💧</div>
+                                        <h4>Humidity</h4>
+                                        <div class="weather-value" id="humidity">--%</div>
+                                        <div class="weather-subtitle">Air moisture level</div>
+                                    </div>
+
+                                    <div class="weather-card wind-card">
+                                        <div class="weather-icon">🌪️</div>
+                                        <h4>Wind Speed</h4>
+                                        <div class="weather-value" id="windSpeed">-- km/h</div>
+                                        <div class="weather-subtitle">Direction <span id="windDirection">--</span></div>
+                                    </div>
+
+                                    <div class="weather-card precipitation-card">
+                                        <div class="weather-icon">🌧️</div>
+                                        <h4>Precipitation</h4>
+                                        <div class="weather-value" id="precipitation">-- mm</div>
+                                        <div class="weather-subtitle">Today's rainfall</div>
+                                    </div>
+
+                                    <div class="weather-card pressure-card">
+                                        <div class="weather-icon">📊</div>
+                                        <h4>Pressure</h4>
+                                        <div class="weather-value" id="pressure">-- mb</div>
+                                        <div class="weather-subtitle">Atmospheric pressure</div>
+                                    </div>
+
+                                    <div class="weather-card uv-card">
+                                        <div class="weather-icon">☀️</div>
+                                        <h4>UV Index</h4>
+                                        <div class="weather-value" id="uvIndex">--</div>
+                                        <div class="weather-subtitle" id="uvLevel">-- exposure</div>
+                                    </div>
+
+                                    <div class="weather-card visibility-card">
+                                        <div class="weather-icon">👁️</div>
+                                        <h4>Visibility</h4>
+                                        <div class="weather-value" id="visibility">-- km</div>
+                                        <div class="weather-subtitle">Clear sight distance</div>
+                                    </div>
+
+                                    <div class="weather-card air-quality-card">
+                                        <div class="weather-icon">🌬️</div>
+                                        <h4>Air Quality</h4>
+                                        <div class="weather-value" id="airQuality">--</div>
+                                        <div class="weather-subtitle" id="airQualityLevel">-- quality</div>
+                                    </div>
+                                </div>
+
+                                <!-- Farming Advisory Based on Weather -->
+                                <div class="farming-advisory" id="farmingAdvisory">
+                                    <h4>🌾 Farming Advisory</h4>
+                                    <div class="advisory-content" id="advisoryContent">
+                                        <p>Enter your location to get weather-based farming recommendations.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6-Column Weather Details Grid -->
+                <br>
+                <div class="weather-details-grid">
+                    <!-- Temperature, Humidity, Wind, Visibility, Pressure, UV Index columns -->
+                </div>
+
+                <!-- Agricultural Advisory Section -->
+                <div class="agricultural-advisory">
+                    <h4></h4>
+                    <div id="farmingAdvice" class="farming-advice"></div>
+                </div>
+
+                <!-- Weather Resources -->
+                <div class="resources-section">
+                    <h2>Weather Service Resources</h2>
+                    <div class="resources-grid" id="weatherResources">
+                        <div class="resource-block">
+                            <h4>Government Weather Services</h4>
+                            <div class="resource-links">
+                                <a href="https://mausam.imd.gov.in" target="_blank" contenteditable="false" class="editable-link">IMD Weather</a>
+                                <a href="https://www.tropmet.res.in" target="_blank" contenteditable="false" class="editable-link">IITM Pune</a>
+                            </div>
+                        </div>
+
+                        <div class="resource-block">
+                            <h4>Agricultural Weather</h4>
+                            <div class="resource-links">
+                                <a href="https://agromet.imd.gov.in" target="_blank" contenteditable="false" class="editable-link">Agromet Advisories</a>
+                                <a href="https://farmer.gov.in" target="_blank" contenteditable="false" class="editable-link">Farmer Portal</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Crops Section -->
+        <section id="crops" class="section section__crops">
+            <div class="container">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <h2 class="hero__title">Agricultural Calendar</h2>
+                    <p class="hero__subtitle">Plan your farming activities month by month for optimal yields</p>
+                </section>
+
+                <!-- Month Cards Grid -->
+                <section class="calendar-grid">
+                    <div class="month-cards" id="monthCards">
+                        <!-- Month cards will be dynamically generated -->
+                    </div>
+                </section>
+                 <div class="resources-section">
+        <h2>Crop Information Resources</h2>
+        <div class="resources-grid" id="cropResources">
+            <div class="resource-block">
+                <h4>Crop Varieties</h4>
+                <div class="resource-links">
+                    <a href="https://seednet.gov.in" target="_blank" contenteditable="false" class="editable-link">Seed Portal</a>
+                    <a href="https://ppvfra.gov.in" target="_blank" contenteditable="false" class="editable-link">Plant Varieties</a>
+                </div>
+            </div>
+
+            <div class="resource-block">
+                <h4>Market Information</h4>
+                <div class="resource-links">
+                    <a href="https://agmarknet.gov.in" target="_blank" contenteditable="false" class="editable-link">AgMarkNet</a>
+                    <a href="https://enam.gov.in" target="_blank" contenteditable="false" class="editable-link">eNAM Portal</a>
+                </div>
+            </div>
+        </div>
+    </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal hidden" id="monthModal">
+        <div class="modal__backdrop" id="modalBackdrop"></div>
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3 class="modal__title" id="modalTitle"></h3>
+                <button class="modal__close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal__body" id="modalBody">
+                <!-- Content will be dynamically generated -->
+            </div>
+            <div class="modal__footer">
+                
+                <button class="btn btn--outline" id="closeModal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="crop-calendar" id="cropCalendar">
+        <!-- Crop calendar will be loaded dynamically -->
+    </div>
+    <section id="login" class="section section__login">
+        <div class="container">
+            <div class="login-container">
+                <div class="login-header">
+                    <h1> Farmer Account Portal</h1>
+                    <p>Join our agricultural community for personalized farming solutions</p>
+                </div>
+
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Login</button>
+                    <button class="auth-tab" data-tab="register">Create Account</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginForm" class="auth-form active">
+                    <div class="form-card">
+                        <h3>Welcome Back, Farmer! 🌾</h3>
+                        <form class="farmer-login-form">
+                            <div class="form-group">
+                                <label for="loginEmail" class="form-label">Email Address</label>
+                                <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="loginPassword" class="form-label">Password</label>
+                                <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                            </div>
+
+                            <div class="form-options">
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" id="rememberMe">
+                                    <span class="checkmark"></span>
+                                    Remember me
+                                </label>
+                                <a href="#" class="forgot-password">Forgot password?</a>
+                            </div>
+
+                            <button type="submit" class="btn btn--primary btn--full-width login-submit-btn">
+                                <span class="btn-text">Login to Dashboard</span>
+                                <div class="btn-spinner" style="display: none;"></div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Registration Form -->
+                <div id="registerForm" class="auth-form">
+                    <div class="form-card">
+                        <h3>Join Our Farming Community! 🚜</h3>
+                        <form class="farmer-register-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName" class="form-label">First Name</label>
+                                    <input type="text" id="firstName" class="form-control" placeholder="Enter first name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastName" class="form-label">Last Name</label>
+                                    <input type="text" id="lastName" class="form-control" placeholder="Enter last name" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="registerEmail" class="form-label">Email Address</label>
+                                <input type="email" id="registerEmail" class="form-control" placeholder="Enter your email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phoneNumber" class="form-label">Phone Number</label>
+                                <input type="tel" id="phoneNumber" class="form-control" placeholder="Enter your phone number" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="farmLocation" class="form-label">Farm Location</label>
+                                    <input type="text" id="farmLocation" class="form-control" placeholder="City, State" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="farmSize" class="form-label">Farm Size (acres)</label>
+                                    <input type="number" id="farmSize" class="form-control" placeholder="Enter farm size" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cropTypes" class="form-label">Primary Crops</label>
+                                <select id="cropTypes" class="form-control" multiple>
+                                    <option value="rice">Rice</option>
+                                    <option value="wheat">Wheat</option>
+                                    <option value="maize">Maize</option>
+                                    <option value="sugarcane">Sugarcane</option>
+                                    <option value="cotton">Cotton</option>
+                                    <option value="vegetables">Vegetables</option>
+                                    <option value="fruits">Fruits</option>
+                                    <option value="pulses">Pulses</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="registerPassword" class="form-label">Password</label>
+                                    <input type="password" id="registerPassword" class="form-control" placeholder="Create password" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required>
+                                </div>
+                            </div>
+
+                            <div class="form-options">
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" id="agreeTerms" required>
+                                    <span class="checkmark"></span>
+                                    I agree to the <a href="#">Terms & Conditions</a>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn--primary btn--full-width register-submit-btn">
+                                <span class="btn-text">Create Farmer Account</span>
+                                <div class="btn-spinner" style="display: none;"></div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Benefits Section -->
+                <div class="benefits-section">
+                    <h3>Benefits of Joining AgriTech Solutions</h3>
+                    <div class="benefits-grid">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">🌾</div>
+                            <h4>Personalized Crop Advisory</h4>
+                            <p>Get tailored farming recommendations based on your location and crop type</p>
+                        </div>
+
+                        <div class="benefit-card">
+                            <div class="benefit-icon">📊</div>
+                            <h4>Farm Analytics</h4>
+                            <p>Track your farm performance with detailed analytics and insights</p>
+                        </div>
+
+                        <div class="benefit-card">
+                            <div class="benefit-icon">🌤️</div>
+                            <h4>Weather Alerts</h4>
+                            <p>Receive timely weather alerts and forecasts specific to your farm</p>
+                        </div>
+
+                        <div class="benefit-card">
+                            <div class="benefit-icon">💰</div>
+                            <h4>Market Prices</h4>
+                            <p>Access real-time market prices and selling opportunities</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+  
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <p>&copy;AgriTech Solutions</p>
+
+                <!-- Team members in one line -->
+                <div class="team-container">
+                    <figure>
+                        <img src="https://media.licdn.com/dms/image/v2/D5603AQHSZTp6q4rbZw/profile-displayphoto-shrink_100_100/B56ZkeioQtKMAU-01757154019689?e=1759968000&v=beta&t=1ZwRMI-acUwVDWGYdNk51eEzIT6dq3c0bycNUR-xV4Q" alt="Priyanshu Pathak">
+                        <figcaption>Priyanshu Pathak</figcaption>
+                    </figure>
+
+                    <figure>
+                        <img src="https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg" alt="Rishabh Yadav">
+                        <figcaption>Rishabh Yadav</figcaption>
+                    </figure>
+
+                    <figure>
+                        <img src="https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg" alt="Vidhi Shukla">
+                        <figcaption>Vidhi Shukla</figcaption>
+                    </figure>
+
+                    <figure>
+                        <img src="https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg" alt="Samiksha Saxena">
+                        <figcaption>Samiksha Saxena</figcaption>
+                    </figure>
+
+                    <figure>
+                        <img src="https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg" alt="Shivam Kumar">
+                        <figcaption>Shivam Kumar</figcaption>
+                    </figure>
+
+                    <figure>
+                        <img src="Chackathon 2.jpg" alt="Pilot Sameer Khan">
+                        <figcaption>Pilot Sameer Khan</figcaption>
+                    </figure>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="contact-section">
+                    <p>Contact us:</p>
+                    <p>Mail:<a href="mailto:itsmepriyanshupathak@gmail.com">itsmepriyanshupathak@gmail.com</a></p>
+                    <p>Phone: <a href="tel:+916388450038">+91 6388450038</a></p>
+                </div>
+            </div>
+            <p>Developer-Priyanshu Pathak</p>
+        </div>
+    </footer>
+
+    <script src="crop-calendar-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
