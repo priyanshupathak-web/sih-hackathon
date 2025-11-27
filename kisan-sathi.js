@@ -5,7 +5,7 @@
 
 class KisanSathi {
   constructor() {
-    this.apiKey = "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";
+    this.apiKey = "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";
     this.apiUrl = "https://openrouter.ai/api/v1/chat/completions";
     this.model = "x-ai/grok-4.1-fast:free";
     
@@ -279,3 +279,4 @@ document.addEventListener('DOMContentLoaded', () => {
   window.kisanSathi = new KisanSathi();
   console.log('✅ Kisan Sathi AI Assistant loaded successfully!');
 });
+
