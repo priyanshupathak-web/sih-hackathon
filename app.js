@@ -1822,7 +1822,7 @@ function initErrorHandling() {
 class WeatherApp {
     constructor() {
         this.apiKey = '0d11aacce8534c3fa69174135252109';
-        this.baseUrl = 'http://api.weatherapi.com/v1/current.json';
+        this.baseUrl = 'https://api.weatherapi.com/v1/current.json';
         this.init();
     }
 
@@ -2135,6 +2135,8 @@ function initApp() {
         initAccessibility();
         initLazyLoading();
         initErrorHandling();
+        // Initialize query form functionality
+        initQueryForm();
         
         // Mark as initialized
         isInitialized = true;
@@ -3155,3 +3157,496 @@ document.addEventListener('DOMContentLoaded', function() {
 window.loadEnhancedCropCalendar = loadEnhancedCropCalendar;
 
 console.log('Enhanced Agricultural Calendar 2025 script loaded - All 12 months available');
+(function() {
+  const allowedEmail = "testuser@gmail.com" ;
+  const allowedPassword = "12345" ;
+  const overlay = document.getElementById('lock-overlay');
+  const loginForm = document.getElementById('forced-login-form');
+  const loginError = document.getElementById('login-error');
+  const mainContent = document.querySelector('.main');
+  const welcomeBanner = document.getElementById('welcome-banner');
+  const body = document.body;
+
+  // Use a flag in sessionStorage for login persistence
+  function checkAuth() {
+    if (sessionStorage.getItem("isLockedIn") === "true") {
+      unlockSite();
+    } else {
+      lockSite();
+    }
+  }
+  function lockSite() {
+    overlay.style.display = 'block';
+    welcomeBanner.style.display = 'none';
+    // Blur everything except overlay/modal
+    document.querySelectorAll('body > *:not(#lock-overlay):not(#welcome-banner)').forEach(el => {
+      el.classList.add('blur-content');
+    });
+  }
+  function unlockSite() {
+    overlay.style.display = 'none';
+    // Remove blur
+    document.querySelectorAll('.blur-content').forEach(el => {
+      el.classList.remove('blur-content');
+    });
+    // Show welcome
+    welcomeBanner.style.display = 'block';
+  }
+
+  loginForm.onsubmit = function(e){
+    e.preventDefault();
+    const email = document.getElementById('forced-login-email').value.trim();
+    const pass = document.getElementById('forced-login-password').value.trim();
+    if (email.toLowerCase() === allowedEmail && pass === allowedPassword) {
+      loginError.style.display = 'none';
+      sessionStorage.setItem("isLockedIn", "true");
+      unlockSite();
+    } else {
+      loginError.style.display = 'block';
+    }
+  };
+
+  window.addEventListener('DOMContentLoaded', checkAuth);
+})();
+
+
+// ==========================================
+// QUERY FORM FUNCTIONALITY
+// ==========================================
+
+/**
+ * Initialize query form functionality
+ */
+function initQueryForm() {
+    try {
+        const queryForm = safeGetElement('#query-form');
+        const queryInput = safeGetElement('#query-input');
+        const charCount = safeGetElement('#char-count');
+        const submitBtn = safeGetElement('#submit-query-btn');
+
+        if (!queryForm || !queryInput || !charCount || !submitBtn) {
+            console.warn('Query form elements not found');
+            return;
+        }
+
+        // Character counter functionality
+        queryInput.addEventListener('input', updateCharacterCount);
+
+        // Form validation on input
+        const formInputs = queryForm.querySelectorAll('input[required], select[required], textarea[required]');
+        formInputs.forEach(input => {
+            input.addEventListener('input', validateQueryForm);
+            input.addEventListener('blur', validateField);
+        });
+
+        // Form submission
+        queryForm.addEventListener('submit', handleQuerySubmission);
+
+        console.log('✅ Query form initialized successfully');
+    } catch (error) {
+        console.error('❌ Error initializing query form:', error);
+    }
+}
+
+/**
+ * Update character count for textarea
+ */
+function updateCharacterCount() {
+    const queryInput = safeGetElement('#query-input');
+    const charCount = safeGetElement('#char-count');
+
+    if (!queryInput || !charCount) return;
+
+    const currentLength = queryInput.value.length;
+    const maxLength = 500;
+
+    charCount.textContent = currentLength;
+
+    // Update styling based on character count
+    const container = charCount.closest('.character-count');
+    if (container) {
+        container.classList.remove('warning', 'error');
+
+        if (currentLength > maxLength * 0.8) {
+            container.classList.add('warning');
+        }
+
+        if (currentLength >= maxLength) {
+            container.classList.add('error');
+        }
+    }
+}
+
+/**
+ * Validate individual form field
+ */
+function validateField(event) {
+    const field = event.target;
+    const value = field.value.trim();
+
+    // Remove existing error styling
+    field.classList.remove('error');
+
+    // Basic required field validation
+    if (field.hasAttribute('required') && !value) {
+        field.classList.add('error');
+        return false;
+    }
+
+    // Email validation
+    if (field.type === 'email' && value) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            field.classList.add('error');
+            return false;
+        }
+    }
+
+    // Character limit validation for textarea
+    if (field.tagName === 'TEXTAREA' && value.length > 500) {
+        field.classList.add('error');
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Validate entire query form
+ */
+function validateQueryForm() {
+    const queryForm = safeGetElement('#query-form');
+    const submitBtn = safeGetElement('#submit-query-btn');
+
+    if (!queryForm || !submitBtn) return false;
+
+    const requiredFields = queryForm.querySelectorAll('input[required], select[required], textarea[required]');
+    let isValid = true;
+
+    requiredFields.forEach(field => {
+        const fieldValid = validateField({ target: field });
+        if (!fieldValid) {
+            isValid = false;
+        }
+    });
+
+    // Enable/disable submit button based on validation
+    if (submitBtn) {
+        submitBtn.disabled = !isValid;
+    }
+
+    return isValid;
+}
+
+/**
+ * Handle query form submission
+ */
+async function handleQuerySubmission(event) {
+    event.preventDefault();
+
+    const queryForm = safeGetElement('#query-form');
+    const submitBtn = safeGetElement('#submit-query-btn');
+    const btnText = submitBtn?.querySelector('.btn-text');
+    const btnSpinner = submitBtn?.querySelector('.btn-spinner');
+    const queryStatus = safeGetElement('#query-status');
+
+    if (!queryForm || !submitBtn) {
+        console.error('Query form elements not found');
+        return;
+    }
+
+    // Final validation check
+    if (!validateQueryForm()) {
+        showQueryStatus('Please fill in all required fields correctly.', 'error');
+        return;
+    }
+
+    // Collect form data
+    const formData = new FormData(queryForm);
+    const queryData = {
+        userName: formData.get('userName'),
+        userEmail: formData.get('userEmail'),
+        queryCategory: formData.get('queryCategory'),
+        queryText: formData.get('queryText'),
+        userLocation: formData.get('userLocation'),
+        timestamp: new Date().toISOString(),
+        id: generateQueryId()
+    };
+
+    // Show loading state
+    setQueryButtonLoadingState(true);
+    showQueryStatus('Submitting your query...', 'loading');
+
+    try {
+        // Simulate API call (replace with actual API endpoint)
+        const success = await submitQueryToServer(queryData);
+
+        if (success) {
+            // Success handling
+            showQueryStatus(
+                `✅ Thank you, ${queryData.userName}! Your query has been submitted successfully. We'll respond to your email (${queryData.userEmail}) within 24 business hours.`,
+                'success'
+            );
+
+            // Reset form
+            queryForm.reset();
+            updateCharacterCount();
+
+            // Store query locally for user reference
+            storeQueryLocally(queryData);
+
+        } else {
+            throw new Error('Failed to submit query');
+        }
+
+    } catch (error) {
+        console.error('Query submission error:', error);
+        showQueryStatus(
+            '❌ Sorry, there was an error submitting your query. Please try again or contact us directly.',
+            'error'
+        );
+    } finally {
+        setQueryButtonLoadingState(false);
+    }
+}
+
+/**
+ * Simulate server submission (replace with actual API call)
+ */
+// Simulate server submission - replace with actual EmailJS API call
+async function submitQueryToServer(queryData) {
+    try {
+        // Initialize EmailJS if not already done
+        if (typeof emailjs === 'undefined') {
+            throw new Error('EmailJS not loaded. Please check your internet connection.');
+        }
+
+        // Prepare email template parameters
+        const templateParams = {
+            user_name: queryData.userName,
+            user_email: queryData.userEmail,
+            query_category: queryData.queryCategory,
+            query_text: queryData.queryText,
+            user_location: queryData.userLocation || 'Not specified',
+            timestamp: new Date().toLocaleString(),
+            query_id: queryData.id
+        };
+
+        console.log('📧 Sending email via EmailJS with params:', templateParams);
+
+        // Send email using EmailJS
+        const response = await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            templateParams
+        );
+
+        console.log('✅ EmailJS Response:', response);
+
+        // Store in localStorage as a backup
+        try {
+            const queries = JSON.parse(localStorage.getItem('submittedQueries') || '[]');
+            queries.push({
+                ...queryData,
+                status: 'sent',
+                emailJsResponse: response.status
+            });
+
+            // Keep only last 10 queries
+            if (queries.length > 10) {
+                queries.splice(0, queries.length - 10);
+            }
+
+            localStorage.setItem('submittedQueries', JSON.stringify(queries));
+        } catch (error) {
+            console.warn('Could not store query locally:', error);
+        }
+
+        return response.status === 200;
+
+    } catch (error) {
+        console.error('❌ EmailJS Error:', error);
+
+        // Store failed query for retry
+        try {
+            const failedQueries = JSON.parse(localStorage.getItem('failedQueries') || '[]');
+            failedQueries.push({
+                ...queryData,
+                status: 'failed',
+                error: error.message,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('failedQueries', JSON.stringify(failedQueries));
+        } catch (storageError) {
+            console.warn('Could not store failed query:', storageError);
+        }
+
+        throw error;
+    }
+}
+
+/**
+ * Set loading state for query submit button
+ */
+function setQueryButtonLoadingState(isLoading) {
+    const submitBtn = safeGetElement('#submit-query-btn');
+    const btnText = submitBtn?.querySelector('.btn-text');
+    const btnSpinner = submitBtn?.querySelector('.btn-spinner');
+
+    if (!submitBtn) return;
+
+    if (isLoading) {
+        submitBtn.disabled = true;
+        if (btnText) btnText.style.display = 'none';
+        if (btnSpinner) btnSpinner.style.display = 'inline-block';
+    } else {
+        submitBtn.disabled = false;
+        if (btnText) btnText.style.display = 'inline';
+        if (btnSpinner) btnSpinner.style.display = 'none';
+    }
+}
+
+/**
+ * Show query status message
+ */
+function showQueryStatus(message, type = 'info') {
+    const queryStatus = safeGetElement('#query-status');
+
+    if (!queryStatus) return;
+
+    queryStatus.className = `query-status ${type}`;
+    queryStatus.innerHTML = message;
+    queryStatus.style.display = 'block';
+
+    // Auto-hide non-error messages
+    if (type !== 'error') {
+        setTimeout(() => {
+            if (queryStatus && queryStatus.classList.contains(type)) {
+                queryStatus.style.display = 'none';
+            }
+        }, type === 'success' ? 8000 : 5000);
+    }
+}
+
+/**
+ * Generate unique query ID
+ */
+function generateQueryId() {
+    return 'query_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+}
+
+/**
+ * Store query locally for user reference
+ */
+function storeQueryLocally(queryData) {
+    try {
+        const userQueries = JSON.parse(localStorage.getItem('userQueries') || '[]');
+        userQueries.push({
+            ...queryData,
+            status: 'submitted',
+            submittedAt: new Date().toISOString()
+        });
+
+        // Keep only last 5 user queries
+        if (userQueries.length > 5) {
+            userQueries.splice(0, userQueries.length - 5);
+        }
+
+        localStorage.setItem('userQueries', JSON.stringify(userQueries));
+    } catch (error) {
+        console.warn('Could not store user query locally:', error);
+    }
+}
+// ========================================
+// QUERY FORM NAVIGATION & HANDLING
+// ========================================
+
+function scrollToQueryForm() {
+  const querySection = document.getElementById('query-section');
+  if (querySection) {
+    querySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => {
+      const firstInput = querySection.querySelector('input[type="text"]');
+      if (firstInput) firstInput.focus();
+    }, 300);
+  }
+}
+
+function goToQueryForm() {
+  const problemsSection = document.getElementById('problems');
+  if (problemsSection) {
+    problemsSection.classList.add('active');
+    document.querySelectorAll('section.section').forEach(section => {
+      if (section.id !== 'problems') {
+        section.classList.remove('active');
+      }
+    });
+    setTimeout(() => scrollToQueryForm(), 80);
+  }
+}
+
+function initQueryFormNavigation() {
+  document.querySelectorAll('[data-section="query-section"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      goToQueryForm();
+    });
+  });
+
+  document.querySelectorAll('[data-section="problems"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const problemsSection = document.getElementById('problems');
+      if (problemsSection) {
+        problemsSection.classList.add('active');
+        document.querySelectorAll('section.section').forEach(section => {
+          if (section.id !== 'problems') {
+            section.classList.remove('active');
+          }
+        });
+        setTimeout(() => scrollToQueryForm(), 100);
+      }
+    });
+  });
+
+  if (window.location.hash === '#query-section') {
+    setTimeout(() => goToQueryForm(), 300);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initQueryFormNavigation();
+});
+
+window.addEventListener('hashchange', () => {
+  if (window.location.hash === '#query-section') {
+    goToQueryForm();
+  }
+});
+
+/**
+ * Get user's query history
+ */
+function getUserQueryHistory() {
+    try {
+        return JSON.parse(localStorage.getItem('userQueries') || '[]');
+    } catch (error) {
+        console.warn('Could not retrieve user query history:', error);
+        return [];
+    }
+}
+/* ──────────────────────────────────────────────
+   EmailJS credentials – AgriTech query form
+   PUBLIC_KEY  :  W3-6x2YPgeW17qxJn
+   SERVICE_ID  :  service_muhbtf4
+   TEMPLATE_ID :  template_j4290qs
+─────────────────────────────────────────────── */
+const EMAILJS_PUBLIC_KEY = 'W3-6x2YPgeW17qxJn';
+const EMAILJS_SERVICE_ID = 'service_muhbtf4';
+const EMAILJS_TEMPLATE_ID = 'template_j4290qs';
+
+
+// ==========================================
+// END QUERY FORM FUNCTIONALITY
+// ==========================================
+
