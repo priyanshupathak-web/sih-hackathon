@@ -5609,7 +5609,7 @@ html {
   bottom: 72px;
   right: 0;
   width: 600px;
-  height: 700px;
+  height: 600px;
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
@@ -5924,3 +5924,4 @@ html {
 /* ==========================================
    END QUERY SECTION STYLING
    ========================================== */
+
