@@ -5,8 +5,8 @@
 
 class KisanSathi {
   constructor() {
-    process.env
-    this.apiKey = .env.apiKey ;
+    require('.env').config();
+    this.apiKey = process.env.apiKey ;
     this.apiUrl = "https://openrouter.ai/api/v1/chat/completions";
     this.model = "x-ai/grok-4.1-fast:free";
     
@@ -280,6 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.kisanSathi = new KisanSathi();
   console.log('✅ Kisan Sathi AI Assistant loaded successfully!');
 });
+
 
 
 
