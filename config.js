@@ -9,13 +9,13 @@
 
 export const API_CONFIG = {
   // Your OpenRouter API Key
-  apiKey: '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',
+  apiKey: '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',
   
   // OpenRouter API Endpoint
   apiUrl: 'https://openrouter.ai/api/v1/chat/completions',
   
   // Model to use
-  model: 'mistralai/mistral-7b-instruct:free',
+  model: 'openai/gpt-oss-20b:freee',
   
   // Application settings
   appName: 'Kisan Sathi',
