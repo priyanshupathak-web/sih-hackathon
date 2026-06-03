@@ -15,12 +15,17 @@ export const API_CONFIG = {
   apiUrl: 'https://openrouter.ai/api/v1/chat/completions',
   
   // Model to use
-  model: 'stepfun/step-3.5-flash:free',
+  model: 'openrouter/owl-alpha',
   
   
   // Application settings
   appName: 'Kisan Sathi',
   environment: 'development'
+};
+export const AUTH0_CONFIG = {
+  domain: 'YOUR_DOMAIN.auth0.com',     // e.g., dev-abc123.us.auth0.com
+  clientId: 'YOUR_CLIENT_ID',          // From Auth0 dashboard
+  audience: 'https://YOUR_DOMAIN.auth0.com/api/v2/'  // Optional for API calls
 };
 
 export default API_CONFIG;
