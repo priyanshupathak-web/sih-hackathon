@@ -15,7 +15,7 @@ export const API_CONFIG = {
   apiUrl: 'https://openrouter.ai/api/v1/chat/completions',
   
   // Model to use
-  model: 'openrouter/owl-alpha',
+  model: 'nex-agi/nex-n2.5-mini:free',
   
   
   // Application settings
